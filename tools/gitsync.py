@@ -12,7 +12,7 @@ from configparser import ConfigParser
 # ------------------------
 # Config
 # ------------------------
-CONFIG_FILE = "config.ini"
+CONFIG_FILE = "gitsync.ini"
 CONFIG_REQUIRED = { "gitsync": ["config_repository",
                                 "config_dir",
                                 "config_file",

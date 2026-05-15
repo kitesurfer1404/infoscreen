@@ -1,0 +1,19 @@
+[gitsync]
+# repository containing the host config for content sync
+config_repository = ssh://git@somehost.com:somepath/config.git
+
+# which config file to process for content sync
+config_file = thishost.ini
+
+# where to store the repository
+config_dir = config
+
+# re-check configuration and content for updates, interval in seconds
+check_interval = 300
+
+# notify server on changes. Triggers reload of clients. 
+# Probably best to set to false on frontend servers
+notify_server = true
+
+# websocket uri to send notifications
+websocket_uri = ws://localhost:8000/ws

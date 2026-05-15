@@ -3,7 +3,7 @@
 cd "$(dirname "$0")"
 
 python3 server.py &
-python3 gitsync.py &
+python3 tools/gitsync.py &
 unclutter &
 xset -dpms s off s noblank s 0 0 s noexpose
 
