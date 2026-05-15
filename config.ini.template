@@ -1,0 +1,46 @@
+# This is an example config file for the server and gitsync.
+# Modify the settings to your needs and save the file as config.ini
+#
+
+[server]
+# set listen_addr to "0.0.0.0" for all addresses
+listen_addr = 127.0.0.1
+listen_port = 8000
+
+# Username and password for basic auth for control interface
+ctrl_username = john
+ctrl_password = secret
+
+# gallery defaults, overwritten by local config.txt in gallery
+autorun_default = false
+autorun_loop_default = false
+autorun_delay_default = 42
+
+# Usually there's no need to change the following settings
+# Leave it like it is. Unless you're one of these 
+# "I know what I'm doing" persons
+webdir = web
+ctrl_path = /ctrl
+ws_path_public = /ws
+ws_path_ctrl = /ctrl/ws
+default_img = sys/placeholder.jpg
+
+[gitsync]
+# repository containing the host config for content sync
+config_repository = ssh://git@somehost.com:somepath/config.git
+
+# which config file to process for content sync
+config_file = thishost.ini
+
+# where to store the repository
+config_dir = config
+
+# re-check configuration and content for updates, interval in seconds
+check_interval = 300
+
+# notify server on changes. Triggers reload of clients. 
+# Probably best to set to false on frontend servers
+notify_server = true
+
+# websocket uri to send notifications
+websocket_uri = ws://localhost:8000/ws

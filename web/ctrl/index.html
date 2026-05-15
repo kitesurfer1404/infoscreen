@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="../sys/pico.classless.pumpkin.min.css">
+    <link rel="stylesheet" href="ctrl.css">
+    <link rel="icon" type="image/png" href="../sys/favicon.png">
+    <script src="../sys/robustwebsocket.js"></script>
+    <script src="../sys/system.js"></script>
+    <script src="ctrl.js"></script>
+    <title>Infodisplay Ctrl</title>
+  </head>
+  <body>
+    <header class="hidden">
+      <button id="back">&#8676; BACK</button>
+      <div></div>
+      <button id="status" class="disconnected">Disconnected</button>
+    </header>
+    <main>
+      <div id="imagelist"></div>
+    </main>
+    <footer class="hidden">
+      <button id="prev">&#9664; PREV</button>
+      <div></div>
+      <button id="next">NEXT &#9654;</button>
+    </footer>
+  </body>
+</html>

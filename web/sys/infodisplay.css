@@ -1,0 +1,58 @@
+* {
+  cursor:none;
+}
+
+html, body {
+  padding:0;
+  margin:0;
+  width:100%;
+  height:100%;
+  background-color:#13171F;
+  font-family:sans-serif;
+}
+
+#display {
+  width:100%;
+  height:100%;
+}
+
+#display img {
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  opacity:1;
+  transition:opacity 0.5s ease-in;
+}
+
+#display img.hidden{
+  opacity:0;
+  transition:opacity 0.5s ease-in;
+}
+
+#imagelist {
+  display:none;
+}
+
+#status {
+  position:absolute;
+  bottom:5px;
+  right:5px;
+  font-weight:bold;
+}
+
+#status.disconnected {
+  color:red;
+  animation: blink 4s linear infinite;
+}
+
+#status.connected {
+  color:green;
+  display:none;
+}
+
+@keyframes blink {
+  0%   { opacity: 0.25; }
+  50%  { opacity: 1.00; }
+  100% { opacity: 0.25; }
+}

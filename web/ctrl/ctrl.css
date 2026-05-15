@@ -1,0 +1,77 @@
+html {
+  scroll-behavior:smooth;
+}
+
+.hidden {
+  display:none;
+}
+
+body > header, 
+body > footer {
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  position:sticky;
+  background-color:#222A38;
+  padding-top:0;
+  padding-bottom:0;
+}
+
+body > header {
+  z-index:100;
+  top:0;
+}
+
+body > footer {
+  bottom:0;
+}
+
+body > header button,
+body > footer button {
+  font-weight:bold;
+  padding:var(--pico-block-spacing-vertical) var(--pico-block-spacing-horizontal);
+  touch-action:manipulation;
+}
+
+.gallery {
+  position:relative;
+}
+
+.gallery img {
+  margin:0.5em 0;
+}
+
+.gallery img[active] {
+  border:0.25em solid var(--pico-primary);
+}
+
+.gallery:has(> img[active]):has(img.hidden)::after {
+  content:"";
+  position:absolute;
+  right:var(--pico-block-spacing-vertical);
+  bottom:var(--pico-block-spacing-vertical);
+  border-top:4vh solid transparent;
+  border-bottom:4vh solid transparent;
+  border-left:7vh solid var(--pico-primary-background);
+  animation: blink 4s linear infinite;
+}
+
+#status {
+  color:white;
+}
+
+#status.disconnected {
+  background-color:red;
+  border-color:red;
+  animation: blink 4s linear infinite;
+}
+
+#status.connected {
+  background-color:green;
+  border-color:green;
+}
+
+@keyframes blink {
+  0%   { opacity: 0.25; }
+  50%  { opacity: 1.00; }
+  100% { opacity: 0.25; }
+}
