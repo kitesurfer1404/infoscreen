@@ -88,7 +88,10 @@ even gitsync (see below). It connects to the local server with firefox in
 kiosk mode. You might want to disable all screensaver and powersaving/standby
 features on your machine. At least in Ubuntu this is done by the autostart.sh
 
+Edit the autostart.sh.example to your needs and safe it to autostart.sh
+
 ```console
+chmod 700 autostart.sh
 ./autostart.sh
 ```
 
