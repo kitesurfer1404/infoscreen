@@ -20,7 +20,7 @@ Clone this repository to your local machine, notebook or server.
 Install dependencies
 
 ```console
-sudo apt install unclutter python3-full python3-aiohttp python3-websocket
+sudo apt install unclutter python3-full python3-aiohttp python3-websockets git
 ```
 
 ## Config

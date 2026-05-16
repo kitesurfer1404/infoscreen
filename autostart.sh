@@ -2,6 +2,9 @@
 
 cd "$(dirname "$0")"
 
+# Pull update at startup
+git pull
+
 python3 server.py &
 python3 tools/gitsync.py &
 unclutter &
