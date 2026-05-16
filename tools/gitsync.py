@@ -154,7 +154,7 @@ def wait_and_restart_or_exit(check_interval):
         time.sleep(check_interval)
 
         # Restart script
-        script_path = os.path.abspath(sys.argv[0])
+        script_path = os.path.abspath(__file__)
         os.execv(sys.executable, [sys.executable, script_path] + sys.argv[1:])
     else:
         logging.info(f"Exiting. Bye!")
