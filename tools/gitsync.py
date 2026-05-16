@@ -13,9 +13,9 @@ from configparser import ConfigParser
 # Config
 # ------------------------
 CONFIG_FILE = "gitsync.ini"
-CONFIG_REQUIRED = { "gitsync": ["config_repository",
-                                "config_dir",
-                                "config_file",
+CONFIG_REQUIRED = { "config": ["repository",
+                                "directory",
+                                "file",
                                 "check_interval",
                                 "websocket_uri",
                                 "notify_server"
@@ -80,7 +80,7 @@ async def notify_server(msg):
     ws = None
 
     try:
-        ws = await websockets.connect(config["gitsync"]["websocket_uri"])
+        ws = await websockets.connect(config["config"]["websocket_uri"])
         logging.info("WS: Connected.")
         logging.info(f"WS: Sending message: {msg}")
         await ws.send(msg)
@@ -119,7 +119,7 @@ def git_update_repository(directory):
     if git_local != git_remote:
         logging.info(f"Changes found. Updating...")
         run(f"git -C {directory} pull")
-        if config.getboolean("gitsync", "notify_server"):
+        if config.getboolean("config", "notify_server"):
             logging.info(f"Notifying webserver!")
             asyncio.run(notify_server("reload"))
     else:
@@ -157,14 +157,14 @@ if __name__ == "__main__":
 
     config = read_config(CONFIG_FILE, CONFIG_REQUIRED)
 
-    git_check_or_clone_repository(config["gitsync"]["config_repository"], config["gitsync"]["config_dir"])
-    git_update_repository(config["gitsync"]["config_dir"])
+    git_check_or_clone_repository(config["config"]["repository"], config["config"]["directory"])
+    git_update_repository(config["config"]["directory"])
 
-    host_config_file = os.path.join(config["gitsync"]["config_dir"], config["gitsync"]["config_file"])
+    host_config_file = os.path.join(config["config"]["directory"], config["config"]["file"])
     host_config = read_config(host_config_file, HOSTCONFIG_REQUIRED)
 
     git_check_or_clone_repository(host_config["content"]["repository"], host_config["content"]["directory"])
     git_content_switch_branch()
     git_update_repository(host_config["content"]["directory"])
 
-    wait_and_restart(config.getint("gitsync","check_interval"))
+    wait_and_restart(config.getint("config","check_interval"))
