@@ -120,13 +120,13 @@ python3 tools/gitsync.py
 
 ## Frontend Server on the Internetz
 
-This part needs complete rewrite for the websocket proxy part. Sorry.
-
-* https://httpd.apache.org/docs/2.4/mod/mod_proxy_wstunnel.html
+You need to sync the web directory of the server with your infoscreen host.
+You can use gitsync for this as well. Or rsync.
 
 
 ### Apache Proxy
 
+On frontend server
 
 ```console
 apt install apache2
@@ -134,46 +134,42 @@ systemctl enable apache2 --now
 
 apt install python3-certbot-apache -y
 certbot --apache --agree-tos --redirect --hsts --staple-ocsp --email someone@example.com -d screen.mydomain.com
-
-a2enmod proxy proxy_http
 ```
 
-/etc/apache2/sites-available/000-default-le-ssl.conf
+/etc/apache2/sites-available/screen.mydomain.com-https.conf
 
 
 ```apache
-<IfModule mod_ssl.c>
-SSLStaplingCache shmcb:/var/run/apache2/stapling_cache(128000)
+
 <VirtualHost *:443>
-        ServerName screen.mydomain.com
+  ServerName screen.mydomain.com
 
-        ServerAdmin webmaster@localhost
+  DocumentRoot /var/www/screen.mydomain.com/web/
 
-        DocumentRoot /var/www/html
+  # Deny any access to git files      
+  RedirectMatch 404 /\.git
 
-        SSLCertificateFile /etc/letsencrypt/live/screen.mydomain.com/fullchain.pem
-        SSLCertificateKeyFile /etc/letsencrypt/live/screen.mydomain.com/privkey.pem
-        Include /etc/letsencrypt/options-ssl-apache.conf
-        Header always set Strict-Transport-Security "max-age=31536000"
-        SSLUseStapling on
+  # Forward /ctrl/ for basic auth from backend server
+  ProxyPass "/ctrl/" "http://127.0.0.1:8000/ctrl/"  
 
-        ProxyPass / http://127.0.0.1:8000/
-        ProxyPassReverse / http://127.0.0.1:8000/
+  # Forward websockets to backend server
+  ProxyPass "/ws" "ws://127.0.0.1:8000/ws"
+  ProxyPass "/ctrl/ws" "ws://127.0.0.1:8000/ctrl/ws"
 
-        ErrorLog ${APACHE_LOG_DIR}/error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
+  SSLEngine on
+  SSLCertificateFile /etc/letsencrypt/live/screen.mydomain.com/fullchain.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/screen.mydomain.com/privkey.pem
 </VirtualHost>
-</IfModule>
-
 ```
 
 
 Then
 
 ```console
+a2enmod proxy proxy_http proxy_wstunnel
+a2ensite screen.mydomain.com-https
 systemctl restart apache2
 ```
-
 
 
 ### Reverse SSH tunnel
