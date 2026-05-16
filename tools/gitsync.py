@@ -33,7 +33,7 @@ logging.basicConfig(level=logging.INFO)
 # ------------------------
 def read_config(config_file, required_options):
     conf = ConfigParser()
-    
+
     # Read file
     logging.info(f"Reading config file '{config_file}'...")
     read_files = conf.read(config_file)
@@ -65,12 +65,19 @@ def read_config(config_file, required_options):
     logging.info(f"Config file '{config_file}' complete.")
     return conf
 
+
 # ------------------------
 # Shell helper
 # ------------------------
 def run(cmd, check=True):
     logging.info(f"→ {cmd}")
-    return subprocess.run(cmd, shell=True, check=check, text=True, capture_output=True)
+    ret = None
+    try:
+        ret = subprocess.run(cmd, shell=True, check=check, text=True, capture_output=True)
+    except Exception as e:
+        logging.exception(f"Unexpected Error: {cmd}")
+
+    return ret
 
 
 # ------------------------
@@ -168,3 +175,4 @@ if __name__ == "__main__":
     git_update_repository(host_config["content"]["directory"])
 
     wait_and_restart(config.getint("config","check_interval"))
+
