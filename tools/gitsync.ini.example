@@ -8,7 +8,8 @@ file = thishost.ini
 # where to store the repository
 directory = config
 
-# re-check configuration and content for updates, interval in seconds
+# re-check configuration and content for updates, interval in seconds.
+# Set to 0 for onetime run and exit
 check_interval = 300
 
 # notify server on changes. Triggers reload of clients. 

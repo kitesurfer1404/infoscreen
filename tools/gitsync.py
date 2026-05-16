@@ -144,16 +144,19 @@ def git_content_switch_branch():
 
 
 # ------------------------
-# Sleep + restart
+# Sleep + restart or exit
 # ------------------------
-def wait_and_restart(check_interval):
-    logging.info(f"Going to sleep for {check_interval} s. Good night.")
-    logging.info("-" * 50)
+def wait_and_restart_or_exit(check_interval):
+    if check_interval > 0:
+        logging.info(f"Going to sleep for {check_interval} s. Good night.")
+        logging.info("-" * 50)
 
-    time.sleep(check_interval)
+        time.sleep(check_interval)
 
-    # Restart script
-    os.execv(sys.executable, [sys.executable] + sys.argv)
+        # Restart script
+        os.execv(sys.executable, [sys.executable] + sys.argv)
+    else:
+        logging.info(f"Exiting. Bye!")
 
 
 # ------------------------
@@ -174,5 +177,4 @@ if __name__ == "__main__":
     git_content_switch_branch()
     git_update_repository(host_config["content"]["directory"])
 
-    wait_and_restart(config.getint("config","check_interval"))
-
+    wait_and_restart_or_exit(config.getint("config","check_interval"))
