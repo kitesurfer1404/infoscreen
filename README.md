@@ -20,8 +20,7 @@ Clone this repository to your local machine, notebook or server.
 Install dependencies
 
 ```console
-pip install aiohttp pathlib configparser asyncio logging websockets
-apt install unclutter
+sudo apt install unclutter python3-full python3-aiohttp python3-websocket
 ```
 
 ## Config
@@ -87,10 +86,10 @@ pdftoppm -jpeg -r 300 mypdf.pdf outdir/imgprexif
 On standalone machines, there is a helper script that starts the server and
 even gitsync (see below). It connects to the local server with firefox in
 kiosk mode. You might want to disable all screensaver and powersaving/standby
-features on your machine. At least in Ubuntu this is done by the autorun.sh
+features on your machine. At least in Ubuntu this is done by the autostart.sh
 
 ```console
-./autorun.sh
+./autostart.sh
 ```
 
 ## Auto-sync content with git
