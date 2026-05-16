@@ -209,6 +209,5 @@ autossh -M 0 -o "ServerAliveInterval=30" -o "ServerAliveCountMax=3" -o "ExitOnFo
 
 Some ideas I have so far:
 
-* lazy loading images for ctrl
 * maybe some kind of caching
 * swipe gestures for the ctrl client

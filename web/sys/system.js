@@ -65,7 +65,8 @@ function load_content(json_str) {
 
   var len = json.content.length;
 
-  const imagecache = document.getElementById("imagelist");
+  const imagelist = document.getElementById("imagelist");
+  const parent = imagelist.parentElement.nodeName;
 
   json.content.forEach((item) => {
     let g = "";
@@ -88,10 +89,14 @@ function load_content(json_str) {
       let elem = document.createElement("img");
       elem.setAttribute("src", g.path + "/" + img);
       elem.setAttribute("alt", img);
+      // add lazy loading on ctrl interface
+      if(parent == "MAIN") {
+        elem.setAttribute("loading", "lazy");
+      }
       gallery.appendChild(elem);
     })
 
-    imagecache.appendChild(gallery);
+    imagelist.appendChild(gallery);
   });
 }
 
