@@ -152,12 +152,13 @@ certbot --apache --agree-tos --redirect --hsts --staple-ocsp --email someone@exa
   # Deny any access to git files      
   RedirectMatch 404 /\.git
 
-  # Forward /ctrl/ for basic auth from backend server
-  ProxyPass "/ctrl/" "http://127.0.0.1:8000/ctrl/"  
-
   # Forward websockets to backend server
-  ProxyPass "/ws" "ws://127.0.0.1:8000/ws"
-  ProxyPass "/ctrl/ws" "ws://127.0.0.1:8000/ctrl/ws"
+  ProxyPass "/ws" "http://127.0.0.1:8000/ws" upgrade=websocket
+  ProxyPass "/ctrl/ws" "http://127.0.0.1:8000/ctrl/ws" upgrade=websocket
+
+  # Forward /ctrl/ for basic auth to backend server
+  ProxyPass "/ctrl/" "http://127.0.0.1:8000/ctrl/"
+  ProxyPassReverse "/ctrl/" "http://127.0.0.1:8000/ctrl/"
 
   SSLEngine on
   SSLCertificateFile /etc/letsencrypt/live/screen.mydomain.com/fullchain.pem
